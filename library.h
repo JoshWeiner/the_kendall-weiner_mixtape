@@ -1,9 +1,12 @@
+#ifndef LIBRARY_H
+#define LIBRARY_H
+#include "list.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "list.h"
-#include "library.h"
-void insert_song (struct song *s, struct song *head);
+
+void insert_song (struct song_node *s, struct song_node *head);
 struct song_node * table[27];
 
 // Insert song
@@ -15,3 +18,6 @@ struct song_node * table[27];
 // Print entire library
 // search song given song and artist name
 // search for an artist
+
+
+#endif

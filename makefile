@@ -7,7 +7,7 @@ main.o: main.c list.h library.h
 list.o: list.c list.h
 	gcc -c list.c
 
-library.o: library.c library.h
+library.o: library.c library.h list.h
 	gcc -c library.c
 
 run: ./go
