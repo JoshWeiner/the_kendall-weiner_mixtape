@@ -2,52 +2,34 @@
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
+#include <time.h>
 
 struct song_node * insert(struct song_node *head, char pname[100], char partist[100]) {
   struct song_node *new_song = malloc(sizeof(struct song_node));
-  strcpy(new_song->name,pname);
-  strcpy(new_song->artist,partist);
+  strncpy(new_song->name,pname,100);
+  strncpy(new_song->artist,partist,100);
 
-  // before head
-  if (strcmp(new_song->artist,head->artist) < 0) {
-        return insert_front(head, pname, partist);
-      }
-  if (strcmp(new_song->artist,head->artist) == 0
-      && strcmp(new_song->name,head->name) < 0) {
-        return insert_front(head, pname, partist);
-      }
-
+  if (head == NULL) {
+    return new_song;
+  }
+  if (songcmp(new_song,head) <= 0) {
+    new_song->next = head;
+    return new_song;
+  }
   struct song_node *prev = head;
-  // need to deal with pass by reference (we are actually USING prev)
-  // need to free current node?
-  // CHECK for nulls
-
-  while (strcmp(new_song->artist,prev->artist) > 0) {
-    prev = prev->next;
-    // print_song(prev);
-  }
-  printf("here!\n" );
-  if (strcmp(new_song->artist,prev->artist) == 0) {
-    printf("here!\n" );
-    while (strcmp(new_song->name,prev->name) >= 0) {
-      if (strcmp(new_song->artist,prev->next->artist) != 0) break;
-      prev = prev->next;
-      print_song(prev);
+  struct song_node *cur = head->next;
+  while (cur != NULL) {
+    if (songcmp(new_song,cur) <= 0) {
+      if (songcmp(new_song,cur) != 0) {
+        new_song->next = cur;
+        prev->next = new_song;
+      }
+      return head;
     }
-    printf("here!\n" );
-    if (strcmp(new_song->name,prev->name) != 0) {
-      print_song(prev);
-      print_song(new_song);
-      printf("here!\n" );
-      new_song->next = prev->next;
-      prev->next = new_song;
-    }
+    prev = cur;
+    cur = cur->next;
   }
-  else {
-    printf("here!\n" );
-    new_song->next = prev->next;
-    prev->next = new_song;
-  }
+  prev->next = new_song;
   return head;
 }
 
@@ -75,7 +57,7 @@ void print_song(struct song_node *s) {
 
 void print_list(struct song_node *s) {
   if(s == NULL) {
-    // printf("[] \n");
+    printf("[] \n");
     return;
   }
   while(s) {
@@ -86,7 +68,6 @@ void print_list(struct song_node *s) {
   }
   printf("\n" );
 
-  // printf("[ Name:  , Artist: ] \n");
   return;
 }
 
@@ -110,7 +91,44 @@ struct song_node * find_first(struct song_node *head, char partist[100]) {
   return NULL;
 }
 
+struct song_node * random_song(struct song_node *head) {
+  srand(time(NULL));
+  // for (int i = 0; i < 10; i++) {
+  //   printf("%d\n", rand());
+  // }
 
+  return get_node(head, rand() % list_length(head));
+}
+
+struct song_node * remove_song(struct song_node *head, char pname[100], char partist[100]) {
+  if (find_song(head,pname,partist) == NULL) return head;
+  if (songcmp(find_song(head,pname,partist),head)==0) {
+    struct song_node *temp = head->next;
+    free(head);
+    return temp;
+  }
+
+  struct song_node *prev = head;
+  struct song_node *cur = head->next;
+  while (songcmp(cur, find_song(head,pname,partist))) {
+    prev=cur;
+    cur=cur->next;
+  }
+  prev->next=cur->next;
+  free(cur);
+  return head;
+}
+
+struct song_node * free_list(struct song_node *head) {
+  struct song_node *cur = head;
+  while (cur) {
+    struct song_node *nxt = cur->next;
+    free(cur);
+    cur = nxt;
+  }
+  return cur;
+
+}
 
 //Helper function - return length of list
 int list_length(struct song_node * head){
@@ -139,10 +157,8 @@ struct song_node * get_node(struct song_node *head, int i){
 //Helper function - return integer comparison value for songs
 int songcmp(struct song_node *n1, struct song_node *n2){
   int art_comp = strcmp(n1->artist, n2->artist);
-
-  if (art_comp == 0) {
+  if (art_comp != 0) {
     return art_comp;
   }
-
   return strcmp(n1->name, n2->name);
 }
