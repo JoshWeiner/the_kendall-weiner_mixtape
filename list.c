@@ -93,6 +93,14 @@ void print_list(struct song_node *s) {
   return;
 }
 
+struct song_node * find_song(struct song_node *head, char pname[100], char partist[100]) {
+  struct song_node * cur = head;
+  while (cur) {
+    if (cur->artist == artist && cur->name == pname) return cur;
+  }
+  return NULL;
+}
+
 //Helper function - return length of list
 int list_length(struct song_node * head){
   if (head == 0) {
