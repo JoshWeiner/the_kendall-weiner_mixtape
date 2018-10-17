@@ -3,7 +3,7 @@
 #include <string.h>
 #include "list.h"
 
-struct song_node * insert_front(struct song_node *head, char pname[100], char partist[100]) {
+struct song_node * insert(struct song_node *head, char pname[100], char partist[100]) {
   struct song_node *new_song = malloc(sizeof(struct song_node));
   strcpy(new_song->name,pname);
   strcpy(new_song->artist,partist);
@@ -99,7 +99,7 @@ int list_length(struct song_node * head){
     return 0;
   }
 
-  return 1 + length(head->next);
+  return 1 + list_length(head->next);
 }
 
 //Helper function - return node at index
