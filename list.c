@@ -3,7 +3,7 @@
 #include <string.h>
 #include "list.h"
 
-struct song_node * insert (struct song_node *head, char pname[100], char partist[100]) {
+struct song_node * insert_front(struct song_node *head, char pname[100], char partist[100]) {
   struct song_node *new_song = malloc(sizeof(struct song_node));
   strcpy(new_song->name,pname);
   strcpy(new_song->artist,partist);
@@ -91,4 +91,39 @@ void print_list(struct song_node *s) {
 
   // printf("[ Name:  , Artist: ] \n");
   return;
+}
+
+//Helper function - return length of list
+int list_length(struct song_node * head){
+  if (head == 0) {
+    return 0;
+  }
+
+  return 1 + length(head->next);
+}
+
+//Helper function - return node at index
+struct song_node * get_node(struct song_node *head, int i){
+  if (i == 0) {
+    return head;
+  }
+
+  else if (head->next) {
+    return get_node(head->next, i - 1);
+  }
+
+  else {
+    return 0;
+  }
+}
+
+//Helper function - return integer comparison value for songs
+int songcmp(struct song_node *n1, struct song_node *n2){
+  int art_comp = strcmp(n1->artist, n2->artist);
+
+  if (art_comp == 0) {
+    return art_comp;
+  }
+
+  return strcmp(n1->name, n2->name);
 }
