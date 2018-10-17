@@ -27,8 +27,13 @@ int main() {
   list = insert(list, "s2","b");
   print_list(list);
 
-  list = insert(list, "s2","b");
+  // list = insert(list, "s2","b");
+  // print_list(list);
+
+  print_song(find_song(list,"s2","b"));
   print_list(list);
+  printf("\n\n" );
+  print_song(find_first(list,"b"));
   //
   // list = insert(list, "s1","a");
   // print_list(list);

@@ -17,10 +17,7 @@ struct song_node * insert(struct song_node *head, char pname[100], char partist[
         return insert_front(head, pname, partist);
       }
 
-  struct song_node *prev = malloc(sizeof(struct song_node));
-  prev->next = head->next;
-  strcpy(prev->artist,head->artist);
-  strcpy(prev->name,head->name);
+  struct song_node *prev = head;
   // need to deal with pass by reference (we are actually USING prev)
   // need to free current node?
   // CHECK for nulls
@@ -96,10 +93,24 @@ void print_list(struct song_node *s) {
 struct song_node * find_song(struct song_node *head, char pname[100], char partist[100]) {
   struct song_node * cur = head;
   while (cur) {
-    if (cur->artist == artist && cur->name == pname) return cur;
+    // print_song(cur);
+    if (strcmp(cur->artist,partist)==0 && strcmp(cur->name,pname)==0) return cur;
+    cur = cur->next;
   }
   return NULL;
 }
+
+struct song_node * find_first(struct song_node *head, char partist[100]) {
+  struct song_node * cur = head;
+  while (cur) {
+    // print_song(cur);
+    if (strcmp(cur->artist,partist)==0) return cur;
+    cur = cur->next;
+  }
+  return NULL;
+}
+
+
 
 //Helper function - return length of list
 int list_length(struct song_node * head){
