@@ -8,9 +8,9 @@ struct song_node * insert(struct song_node *head, char pname[100], char partist[
   struct song_node *new_song = malloc(sizeof(struct song_node));
   strncpy(new_song->name,pname,100);
   strncpy(new_song->artist,partist,100);
+  new_song->next = NULL;
 
   if (head == NULL) {
-    new_song->next = NULL;
     return new_song;
   }
   if (songcmp(new_song,head) <= 0) {
