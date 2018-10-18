@@ -63,7 +63,8 @@ int main() {
   insert_song("s1","aba");
   insert_song("s120","aa");
   // printf("%d", sizeof(table[0]));
-  print_list(table[0]);
+  // print_list(table[0]);
+  print_song(table[0]->next);
   // print_song(search_song("s120","aa"));
   // search_artist("a");
   // search_artist("ba");
