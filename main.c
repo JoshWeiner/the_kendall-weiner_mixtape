@@ -77,6 +77,14 @@ int main() {
   print_letterlist("a");
   print_songs("a");
   print_library();
+  shuffle();
+  song_delete("s120","aa");
+  print_library();
+  clear_library();
+  print_library();
+
+  printf("\n\nTHINGS STILL NEEDED TO BE DONE:\n" );
+  printf("Shuffle, check insert_song, valid print tests\n" );
 
   return 0;
 }

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "list.h"
 #include "library.h"
+#include <time.h>
 
 char letters[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -51,6 +52,32 @@ void print_songs(char partist[100]) {
 void print_library() {
   // why is this in the wrong order?
   for (int i = 0; i < 27; i++) print_letterlist(&letters[i]);
+}
+
+// CURRENTLY NOT FUNCTIONING
+void shuffle() {
+  srand(time(NULL));
+  int counter = 0;
+  int randbin;
+  while (counter < 5) { // could change if more songs
+    randbin = rand() % 27;
+    // printf("random number: %d\n", randbin);
+    if (table[randbin]) {
+      print_song(random_node(table[randbin]));
+      counter++;
+    }
+  }
+}
+
+void song_delete(char pname[100], char partist[100]) {
+  int binnum = artistindex(partist);
+  table[binnum] = remove_song(table[binnum],pname,partist);
+}
+
+void clear_library() {
+  for (int i = 0; i < 27; i++) {
+    table[i]=free_list(table[i]);
+  }
 }
 
 

@@ -4,6 +4,7 @@
 #include "list.h"
 #include <time.h>
 
+
 struct song_node * insert(struct song_node *head, char pname[100], char partist[100]) {
   struct song_node *new_song = malloc(sizeof(struct song_node));
   strncpy(new_song->name,pname,100);
@@ -109,7 +110,6 @@ struct song_node * remove_song(struct song_node *head, char pname[100], char par
     free(head);
     return temp;
   }
-
   struct song_node *prev = head;
   struct song_node *cur = head->next;
   while (songcmp(cur, find(head,pname,partist))) {
@@ -129,7 +129,6 @@ struct song_node * free_list(struct song_node *head) {
     cur = nxt;
   }
   return cur;
-
 }
 
 //Helper function - return length of list
