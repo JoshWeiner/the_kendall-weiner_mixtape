@@ -60,14 +60,15 @@ void print_list(struct song_node *s) {
     printf("[] \n");
     return;
   }
-  while(s) {
+  while(s->next) {
     char * name = s->name;
     char * artist = s->artist;
     printf("[%s: %s] | ", artist, name);
     s = s->next;
   }
-  printf("\n" );
-
+  char * name = s->name;
+  char * artist = s->artist;
+  printf("[%s: %s]", artist, name);
   return;
 }
 
