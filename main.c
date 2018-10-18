@@ -60,15 +60,23 @@ int main() {
 
 
   insert_song("s0","a");
+  insert_song("s1","a");
+  insert_song("s2","a");
+  insert_song("s7","a");
   insert_song("s1","aba");
   insert_song("s120","aa");
+  insert_song("s120","ba");
+  insert_song("s120","ca");
   // printf("%d", sizeof(table[0]));
   print_list(table[0]);
-  // print_song(table[0]->next);
-  // print_song(search_song("s120","aa"));
-  // search_artist("a");
-  // search_artist("ba");
-  // print_letter("a");
+  print_list(table[1]);
+
+  print_song(search_song("s120","aa"));
+  search_artist("a");
+  search_artist("ba");
+  print_letterlist("a");
+  print_songs("a");
+  print_library();
 
   return 0;
 }

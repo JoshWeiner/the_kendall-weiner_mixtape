@@ -58,7 +58,7 @@ void print_song(struct song_node *s) {
 
 void print_list(struct song_node *s) {
   if(s == NULL) {
-    printf("[] \n");
+    // printf("[] \n");
     return;
   }
   while(s->next) {

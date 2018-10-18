@@ -30,13 +30,27 @@ void search_artist(char partist[100]) {
   }
 }
 
-void print_letter(char c[1]) {
+void print_letterlist(char c[1]) {
   int binnum = 0;
   for (int i = 0; i < sizeof(letters)/sizeof(char); i++) {
     if (strcmp(c,&letters[i]) < 0) break;
     binnum++;
   }
   print_list(table[binnum]);
+}
+
+void print_songs(char partist[100]) {
+  int binnum = artistindex(partist);
+  struct song_node *cur = find_first(table[binnum],partist);
+  while (cur && strcmp(cur->artist,partist)==0) {
+    print_song(cur);
+    cur = cur->next;
+  }
+}
+
+void print_library() {
+  // why is this in the wrong order?
+  for (int i = 0; i < 27; i++) print_letterlist(&letters[i]);
 }
 
 

@@ -12,11 +12,14 @@ struct song_node * table[27];
 void insert_song(char pname[100], char partist[100]);
 // Delete song
 // Shuffle
+void shuffle();
 // Clear library
 // Print (entries under certain letter)
-void print_letter(char c[1]);
+void print_letterlist(char c[1]);
 // Print songs of artist
+void print_songs(char partist[100]);
 // Print entire library
+void print_library();
 // search song given song and artist name
 struct song_node * search_song(char pname[100], char partist[100]);
 // search for an artist
