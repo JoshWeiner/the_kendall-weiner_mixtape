@@ -10,6 +10,7 @@ struct song_node * insert(struct song_node *head, char pname[100], char partist[
   strncpy(new_song->artist,partist,100);
 
   if (head == NULL) {
+    new_song->next = NULL;
     return new_song;
   }
   if (songcmp(new_song,head) <= 0) {
@@ -68,7 +69,7 @@ void print_list(struct song_node *s) {
   }
   char * name = s->name;
   char * artist = s->artist;
-  printf("[%s: %s]", artist, name);
+  printf("[%s: %s] \n", artist, name);
   return;
 }
 

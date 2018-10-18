@@ -6,8 +6,11 @@
 
 char letters[] = "abcdefghijklmnopqrstuvwxyz";
 
+
+
 void insert_song(char pname[100], char partist[100]) {
   int binnum = artistindex(partist);
+
   table[binnum] = insert(table[binnum],pname,partist);
 }
 
