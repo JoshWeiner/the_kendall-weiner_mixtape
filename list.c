@@ -71,7 +71,7 @@ void print_list(struct song_node *s) {
   return;
 }
 
-struct song_node * find_song(struct song_node *head, char pname[100], char partist[100]) {
+struct song_node * find(struct song_node *head, char pname[100], char partist[100]) {
   struct song_node * cur = head;
   while (cur) {
     // print_song(cur);
@@ -91,7 +91,7 @@ struct song_node * find_first(struct song_node *head, char partist[100]) {
   return NULL;
 }
 
-struct song_node * random_song(struct song_node *head) {
+struct song_node * random_node(struct song_node *head) {
   srand(time(NULL));
   // for (int i = 0; i < 10; i++) {
   //   printf("%d\n", rand());
@@ -101,8 +101,8 @@ struct song_node * random_song(struct song_node *head) {
 }
 
 struct song_node * remove_song(struct song_node *head, char pname[100], char partist[100]) {
-  if (find_song(head,pname,partist) == NULL) return head;
-  if (songcmp(find_song(head,pname,partist),head)==0) {
+  if (find(head,pname,partist) == NULL) return head;
+  if (songcmp(find(head,pname,partist),head)==0) {
     struct song_node *temp = head->next;
     free(head);
     return temp;
@@ -110,7 +110,7 @@ struct song_node * remove_song(struct song_node *head, char pname[100], char par
 
   struct song_node *prev = head;
   struct song_node *cur = head->next;
-  while (songcmp(cur, find_song(head,pname,partist))) {
+  while (songcmp(cur, find(head,pname,partist))) {
     prev=cur;
     cur=cur->next;
   }
