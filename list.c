@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "list.h"
 #include <time.h>
+#include "list.h"
 
 
 struct song_node * insert(struct song_node *head, char pname[100], char partist[100]) {
@@ -48,7 +48,6 @@ void print_song(struct song_node *s) {
     printf("Song doesn't exist! \n");
     return;
   }
-
   else {
     char * name = s->name;
     char * artist = s->artist;
@@ -65,20 +64,21 @@ void print_list(struct song_node *s) {
   while(s->next) {
     char * name = s->name;
     char * artist = s->artist;
-    printf("[%s: %s] | ", artist, name);
+    printf("%s : %s | ", artist, name);
     s = s->next;
   }
   char * name = s->name;
   char * artist = s->artist;
-  printf("[%s: %s] \n", artist, name);
+  printf("%s : %s \n", artist, name);
   return;
 }
 
 struct song_node * find(struct song_node *head, char pname[100], char partist[100]) {
   struct song_node * cur = head;
   while (cur) {
-    // print_song(cur);
-    if (strcmp(cur->artist,partist)==0 && strcmp(cur->name,pname)==0) return cur;
+    if (strcmp(cur->artist,partist)==0 && strcmp(cur->name,pname)==0) {
+      return cur;
+    }
     cur = cur->next;
   }
   return NULL;
@@ -87,20 +87,17 @@ struct song_node * find(struct song_node *head, char pname[100], char partist[10
 struct song_node * find_first(struct song_node *head, char partist[100]) {
   struct song_node * cur = head;
   while (cur) {
-    // print_song(cur);
-    if (strcmp(cur->artist,partist)==0) return cur;
+    if (!strcmp(cur->artist, partist)) {
+      return cur;
+    }
     cur = cur->next;
   }
   return NULL;
 }
 
 struct song_node * random_node(struct song_node *head) {
-  srand(time(NULL));
-  // for (int i = 0; i < 10; i++) {
-  //   printf("%d\n", rand());
-  // }
-
-  return get_node(head, rand() % list_length(head));
+  int randy = rand() % list_length(head);
+  return get_node(head, randy);
 }
 
 struct song_node * remove_song(struct song_node *head, char pname[100], char partist[100]) {
@@ -125,6 +122,7 @@ struct song_node * free_list(struct song_node *head) {
   struct song_node *cur = head;
   while (cur) {
     struct song_node *nxt = cur->next;
+    printf("Freeing %s : %s \n", cur->name, cur->artist);
     free(cur);
     cur = nxt;
   }
@@ -157,6 +155,8 @@ struct song_node * get_node(struct song_node *head, int i){
 
 //Helper function - return integer comparison value for songs
 int songcmp(struct song_node *n1, struct song_node *n2){
+  // print_song(n1);
+  // print_song(n2);
   int art_comp = strcmp(n1->artist, n2->artist);
   if (art_comp != 0) {
     return art_comp;

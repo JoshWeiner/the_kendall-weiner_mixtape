@@ -17,13 +17,14 @@ void shuffle();
 // Clear library
 void clear_library();
 // Print (entries under certain letter)
-void print_letterlist(char c[1]);
+void print_letter(char c);
+void print_letterlist(int i);
 // Print songs of artist
 void print_songs(char partist[100]);
 // Print entire library
 void print_library();
 // search song given song and artist name
-struct song_node * search_song(char pname[100], char partist[100]);
+void search_song(char pname[100], char partist[100]);
 // search for an artist
 void search_artist(char partist[100]);
 // helper functions

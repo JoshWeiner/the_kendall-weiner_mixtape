@@ -1,43 +1,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "list.h"
 #include "library.h"
-#include <time.h>
-
-char letters[] = "abcdefghijklmnopqrstuvwxyz";
-
-
 
 void insert_song(char pname[100], char partist[100]) {
   int binnum = artistindex(partist);
 
-  table[binnum] = insert(table[binnum],pname,partist);
+  if(table[binnum]){
+    table[binnum] = insert(table[binnum], pname, partist);
+    return;
+  }
+  else {
+    struct song_node * new = malloc(sizeof(struct song_node));
+    new = NULL;
+    table[binnum] = insert(new, pname, partist);
+    // print_list(table[binnum]);
+    return;
+  }
 }
 
-struct song_node * search_song(char pname[100], char partist[100]) {
+void search_song(char pname[100], char partist[100]) {
   int binnum = artistindex(partist);
-  return find(table[binnum],pname,partist);
+  if(find(table[binnum],pname,partist)) {
+    printf("Song found! \n");
+    print_song(find(table[binnum],pname,partist));
+  }
+  else {
+    printf("Song not found! \n");
+  }
 }
 
 void search_artist(char partist[100]) {
   int binnum = artistindex(partist);
   struct song_node *first = find_first(table[binnum],partist);
   if (first) {
-    printf("artist not found!\n" );
+    printf("artist found!\n" );
+    print_list(first);
   }
   else {
-    printf("artist found!\n" );
+    printf("artist not found!\n" );
   }
 }
 
-void print_letterlist(char c[1]) {
-  int binnum = 0;
-  for (int i = 0; i < sizeof(letters)/sizeof(char); i++) {
-    if (strcmp(c,&letters[i]) < 0) break;
-    binnum++;
+void print_letter(char c) {
+  int i = c - 'A';
+  if (table[i]) {
+    printf("%c \n", 'A' + i);
+    print_list(table[i]);
   }
-  print_list(table[binnum]);
+}
+
+void print_letterlist(int i) {
+    if (table[i]) {
+      printf("%c \n", 'A' + i);
+      print_list(table[i]);
+    }
+  // printf("%s \n", c);
 }
 
 void print_songs(char partist[100]) {
@@ -50,17 +70,15 @@ void print_songs(char partist[100]) {
 }
 
 void print_library() {
-  // why is this in the wrong order?
-  for (int i = 0; i < 27; i++) print_letterlist(&letters[i]);
+  for (int i = 0; i < 27; i++) {
+    print_letterlist(i);
+  }
 }
 
-// CURRENTLY NOT FUNCTIONING
 void shuffle() {
-  srand(time(NULL));
   int counter = 0;
-  int randbin;
-  while (counter < 5) { // could change if more songs
-    randbin = rand() % 27;
+  while (counter < 6) {
+    int randbin = (rand()) % 27;
     // printf("random number: %d\n", randbin);
     if (table[randbin]) {
       print_song(random_node(table[randbin]));
@@ -82,10 +100,11 @@ void clear_library() {
 
 
 int artistindex(char partist[100]) {
-  int n = 0;
-  for (int i = 0; i < sizeof(letters)/sizeof(char); i++) {
-    if (strcmp(partist,&letters[i]) < 0) break;
-    n++;
+  int num = 0;
+
+  if(partist[0] - 'A' > 25){
+    num = 26;
   }
-  return n;
+
+  return partist[0] - 'A';
 }
